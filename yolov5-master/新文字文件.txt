@@ -1,0 +1,39 @@
+cd/d D:\picture_fiting\yolov5-master\yolov5-master
+
+python train.py --img 640 --batch 16 --epochs 5 --data voc.yaml --weights yolov5s.pt
+
+python train.py --img 640 --batch 16 --epochs 300 --data voc.yaml --weights yolov5s.pt
+
+python train.py --img 640 --batch 16 --epochs 300 --data voc_face.yaml --weights yolov5s.pt
+
+python detect.py --source 0  # webcam
+                            file.jpg  # image 
+                            file.mp4  # video
+                            path/  # directory
+                            path/*.jpg  # glob
+                            rtsp://170.93.143.139/rtplive/470011e600ef003a004ee33696235daa  # rtsp stream
+                            rtmp://192.168.1.105/live/test  # rtmp stream
+                            http://112.50.243.8/PLTV/88888888/224/3221225900/1.m3u8  # http stream
+
+
+python detect.py --source VID_20210309_130339.mp4 --conf-thres 0.5 --iou-thres=0.65
+
+python detect.py --source data\try\FLIR0898.mp4 --conf-thres 0.5 --iou-thres=0.65
+
+python detect.py --source 0 --conf-thres 0.5
+
+python detect.py --source 0 --weight runs\train\exp\weights\best.pt
+
+python detect.py --source 0 --weight runs\train\exp\weights\best.pt --device cpu
+
+
+python detect.py --source ../lee/test/images --weights ./weights/myweights.pt
+
+python detect.py --source data/images/bus.jpg 
+
+
+python detect.py --source 0 --weight runs\train_hand\exp13\weights\best.pt
+python detect.py --source 0 --weight runs\train_hand\exp13\weights\last.pt
+
+
+python hubconf_video.py
