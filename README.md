@@ -104,145 +104,145 @@ detect_yolo_fir.py
 plots.py
 -------------------------------------------------
 
-def plot_one_box_fir(x, img, img_r, M, T, color=None, label=None, line_thickness=None): #秀出搜索框 物件名稱 體溫 祝賀語
-    blessing = ["You can do it.","I have faith in you.","You're looking sharp!","You're so smart.","You're awesome !",
-                "You did a good job."," You're very professional."]
-    # Plots one bounding box on image img
-    tl = line_thickness # or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1  # line/font thickness
-    color = color or [random.randint(0, 255) for _ in range(3)]
-    c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
-    # img = img[c1[1] : c2[1], c1[0] : c2[0]]
-    c1_r, c2_r = tp.Ptransform(c1, c2, M)
+      def plot_one_box_fir(x, img, img_r, M, T, color=None, label=None, line_thickness=None): #秀出搜索框 物件名稱 體溫 祝賀語
+          blessing = ["You can do it.","I have faith in you.","You're looking sharp!","You're so smart.","You're awesome !",
+                      "You did a good job."," You're very professional."]
+          # Plots one bounding box on image img
+          tl = line_thickness # or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1  # line/font thickness
+          color = color or [random.randint(0, 255) for _ in range(3)]
+          c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
+          # img = img[c1[1] : c2[1], c1[0] : c2[0]]
+          c1_r, c2_r = tp.Ptransform(c1, c2, M)
 
-    cv2.rectangle(img, c1, c2, color, tl, cv2.LINE_AA)
-    if label:
-        tf = max(tl - 1, 1)  # font thickness
-        imCrop = img_r[c1_r[0] : c2_r[0], c1_r[1] : c2_r[1]]
-        # print("imCrop",imCrop)
-        isperson = label[:6]
-        # print("label:",isperson)
-        if isperson == 'person':
-            # print(imCrop)
-            # if imCrop.shape[0] and imCrop.shape[1] != 0:
-                # cv2.imshow("imCrop",imCrop)
-            tep_color = tp.get_temperature(imCrop)
-            label = label +" , Tc = "+str(tep_color)
-            
-            
-        
-        t_size = cv2.getTextSize(label, 0, fontScale=tl / 3, thickness=tf)[0]
-        c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
-        if isperson == 'person':
-            t_size_b = cv2.getTextSize(blessing[T], 0, fontScale=tl / 3, thickness=tf)[0]
-            c3 = c1[0] + max(t_size_b[0],t_size[0]), c2[1] - t_size_b[1] - 6
-            cv2.rectangle(img, c1, c3, color, -1, cv2.LINE_AA)
-            cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-            cv2.putText(img, blessing[T], (c1[0], c1[1] - 6-t_size_b[1]), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-        else:
-            cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
-            cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-        # cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
+          cv2.rectangle(img, c1, c2, color, tl, cv2.LINE_AA)
+          if label:
+              tf = max(tl - 1, 1)  # font thickness
+              imCrop = img_r[c1_r[0] : c2_r[0], c1_r[1] : c2_r[1]]
+              # print("imCrop",imCrop)
+              isperson = label[:6]
+              # print("label:",isperson)
+              if isperson == 'person':
+                  # print(imCrop)
+                  # if imCrop.shape[0] and imCrop.shape[1] != 0:
+                      # cv2.imshow("imCrop",imCrop)
+                  tep_color = tp.get_temperature(imCrop)
+                  label = label +" , Tc = "+str(tep_color)
+
+
+
+              t_size = cv2.getTextSize(label, 0, fontScale=tl / 3, thickness=tf)[0]
+              c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
+              if isperson == 'person':
+                  t_size_b = cv2.getTextSize(blessing[T], 0, fontScale=tl / 3, thickness=tf)[0]
+                  c3 = c1[0] + max(t_size_b[0],t_size[0]), c2[1] - t_size_b[1] - 6
+                  cv2.rectangle(img, c1, c3, color, -1, cv2.LINE_AA)
+                  cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+                  cv2.putText(img, blessing[T], (c1[0], c1[1] - 6-t_size_b[1]), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+              else:
+                  cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
+                  cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
+              # cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         
         
 temperature.py
 -----------------------------------
 
-import cv2
-import numpy as np
-import statistics
-import heapq
+      import cv2
+      import numpy as np
+      import statistics
+      import heapq
 
-np.set_printoptions(threshold=np.inf)
-result = []
-tph = 40   
-tpl = 30
-rgh = 255
-rgl = 0
-lim = 100
-# face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-def face_dect(image):  # Haar臉部辨識，沒採用
-    perimeter_list = []
-    # print("face_dect")
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    face = face_cascade.detectMultiScale(image, 1.1, 4)        
+      np.set_printoptions(threshold=np.inf)
+      result = []
+      tph = 40   
+      tpl = 30
+      rgh = 255
+      rgl = 0
+      lim = 100
+      # face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+      def face_dect(image):  # Haar臉部辨識，沒採用
+          perimeter_list = []
+          # print("face_dect")
+          face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+          face = face_cascade.detectMultiScale(image, 1.1, 4)        
 
-    if face != () :
-        for (x_c, y_c, w_c, h_c) in face:
-            perimeter = w_c+ h_c
-            perimeter_list.append(perimeter)
-        max_perimeter = perimeter_list.index(max(perimeter_list))
-        # print(max_perimeter)
-        face = face[max_perimeter]
-        face = face.tolist()
-        # print(face)
-        # image = image[face[0]:face[0]+face[2],face[1]:face[1]+face[3]]
+          if face != () :
+              for (x_c, y_c, w_c, h_c) in face:
+                  perimeter = w_c+ h_c
+                  perimeter_list.append(perimeter)
+              max_perimeter = perimeter_list.index(max(perimeter_list))
+              # print(max_perimeter)
+              face = face[max_perimeter]
+              face = face.tolist()
+              # print(face)
+              # image = image[face[0]:face[0]+face[2],face[1]:face[1]+face[3]]
 
-    return face
+          return face
 
-def get_temperature(image): # 計算熱像儀上影像溫度
-    # print("get_temperature")
-    if image.shape[0] and image.shape[1] != 0:
+      def get_temperature(image): # 計算熱像儀上影像溫度
+          # print("get_temperature")
+          if image.shape[0] and image.shape[1] != 0:
 
-        
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        height = image.shape[0]
-        width = image.shape[1]
-        result = np.zeros((height, width), np.uint8)
-        # result = image[int(height/2-5):int(height/2+5),int(width/2-5):int(width/2+5)]
-        for i in range(height):
-            for j in range(width):
-                if (int(image[i, j] > lim) and int(image[i, j] < 160)): #245,254為顏色閥值
-                    gray = int(image[i, j])
 
-                else:
-                    # gray = None
-                    gray = 0
-                result[i, j] = gray
+              image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+              height = image.shape[0]
+              width = image.shape[1]
+              result = np.zeros((height, width), np.uint8)
+              # result = image[int(height/2-5):int(height/2+5),int(width/2-5):int(width/2+5)]
+              for i in range(height):
+                  for j in range(width):
+                      if (int(image[i, j] > lim) and int(image[i, j] < 160)): #245,254為顏色閥值
+                          gray = int(image[i, j])
 
-        
-        result = result.flatten()
-        # result = np.unique(result).tolist()
-        result = result.tolist()
-        while 0 in result:
-            result.remove(0)
+                      else:
+                          # gray = None
+                          gray = 0
+                      result[i, j] = gray
 
-        # print(result)
-        
-        if result == []:
-            temperature = "Nan" 
-        
-        else:
-            mean = np.median(result)
-            temperature = round(((mean-tpl)*(tph-tpl)/(rgh-rgl)+tpl),2)+2.5
-        
-       
 
-    else:
-        temperature = "Nan"
+              result = result.flatten()
+              # result = np.unique(result).tolist()
+              result = result.tolist()
+              while 0 in result:
+                  result.remove(0)
 
-    # print(temperature)
+              # print(result)
 
-    return temperature
+              if result == []:
+                  temperature = "Nan" 
+
+              else:
+                  mean = np.median(result)
+                  temperature = round(((mean-tpl)*(tph-tpl)/(rgh-rgl)+tpl),2)+2.5
 
 
 
-def Ptransform(rect_up,rect_down,M): # 影像透視變換，因為熱像儀解析度240P而相機解析度為1080P，無法直接對使用由相機影像抓出的搜索框位置
-    rect_up = list(rect_up) #為了加1
-    rect_down = list(rect_down)
+          else:
+              temperature = "Nan"
 
-    one=[1]
-    pts1 = rect_up+ one
-    pts2 = rect_down+ one
+          # print(temperature)
 
-    # print("pts1",pts1)
-    # print("pts2",pts2)
-    # print("M",M)
+          return temperature
 
-    up  = M.dot(pts1). astype(int)
-    down  = M.dot(pts2). astype(int)
-    up = up[:2]
-    down = down[:2]
-    # print("up",up)
-    # print("down",down)
 
-    return(up,down)
+
+      def Ptransform(rect_up,rect_down,M): # 影像透視變換，因為熱像儀解析度240P而相機解析度為1080P，無法直接對使用由相機影像抓出的搜索框位置
+          rect_up = list(rect_up) #為了加1
+          rect_down = list(rect_down)
+
+          one=[1]
+          pts1 = rect_up+ one
+          pts2 = rect_down+ one
+
+          # print("pts1",pts1)
+          # print("pts2",pts2)
+          # print("M",M)
+
+          up  = M.dot(pts1). astype(int)
+          down  = M.dot(pts2). astype(int)
+          up = up[:2]
+          down = down[:2]
+          # print("up",up)
+          # print("down",down)
+
+          return(up,down)
