@@ -35,9 +35,9 @@ required
 usage
 --------------------------------------------------------
 本專案物件辨識使用 YOLO v5 深度學習模型修改檔案如下：
-yolov5-master-> utils -> detect_yolo_fir.py
-                         plots.py
-                         temperature.py
+      yolov5-master-> utils -> detect_yolo_fir.py
+                               plots.py
+                               temperature.py
 
 detect_yolo_fir.py
 ------------------------------------------------------
