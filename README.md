@@ -38,6 +38,7 @@ usage
 yolov5-master-> utils -> detect_yolo_fir.py
                          plots.py
                          temperature.py
+------------------------------------------------------
 detect_yolo_fir.py
 ------------------------------------------------------
 
