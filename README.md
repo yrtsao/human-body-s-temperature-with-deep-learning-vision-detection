@@ -42,10 +42,11 @@ usage
 
 detect_yolo_fir.py
 ------------------------------------------------------
-sys.path.append('D:\python\yolov5_notebook\yolov5-master\yolov5-master')
-其中需要修改路徑
-self.model = hub.custom(path_or_model=r'\python\yolov5_notebook\yolov5-master\yolov5-master\yolov5s.pt') 
-其中的path_or_model需要修改路徑
+
+      sys.path.append('D:\python\yolov5_notebook\yolov5-master\yolov5-master')
+      其中需要修改路徑
+      self.model = hub.custom(path_or_model=r'\python\yolov5_notebook\yolov5-master\yolov5-master\yolov5s.pt') 
+      其中的path_or_model需要修改路徑
 
     def detect_yolo_big (self, img): # 輸出最大面積的搜索框
         results = self.model(img)
