@@ -39,8 +39,12 @@ required
       使用前先用 transform 中的 transform_getPerspectiveTransform.py 較正相機跟熱像儀相對鏡射關係
       可由transform_POS_getPerspectiveTransform.py 做驗證
 
-      
-      
+相機影像示意圖
+![image](https://github.com/yrtsao/human-body-s-temperature-with-deep-learning-vision-detection/blob/master/transform/524-13/output.jpg?raw=true)
+熱像儀示意圖
+![image](https://user-images.githubusercontent.com/82528634/133406315-a9212a5a-d6a8-4a5b-9316-d16e580ca938.png)
+
+影像為校正板，圖中板子包含越完整鏡射投影效果越好
       
 usage
 --------------------------------------------------------
