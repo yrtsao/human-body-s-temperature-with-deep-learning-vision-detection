@@ -33,6 +33,15 @@ required
       thop  # FLOPS computation
       pycocotools>=2.0  # COCO mAP
       
+校正
+-------------------------------------------------------
+
+      使用前先用 transform 中的 transform_getPerspectiveTransform.py 較正相機跟熱像儀相對鏡射關係
+      可由transform_POS_getPerspectiveTransform.py 做驗證
+
+      
+      
+      
 usage
 --------------------------------------------------------
       # content ----------------------------------------------
@@ -40,6 +49,7 @@ usage
       yolov5-master-> utils -> detect_yolo_fir.py
                                plots.py
                                temperature.py
+                           
 
 detect_yolo_fir.py
 ------------------------------------------------------
