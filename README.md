@@ -35,6 +35,7 @@ required
 usage
 --------------------------------------------------------
       # content ----------------------------------------------
+      有修改並增加功能的部分
       yolov5-master-> utils -> detect_yolo_fir.py
                                plots.py
                                temperature.py
