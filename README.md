@@ -42,5 +42,60 @@ usage
 
 detect_yolo_fir.py
 ------------------------------------------------------
+sys.path.append('D:\python\yolov5_notebook\yolov5-master\yolov5-master')
+其中需要修改路徑
+self.model = hub.custom(path_or_model=r'\python\yolov5_notebook\yolov5-master\yolov5-master\yolov5s.pt') 
+其中的path_or_model需要修改路徑
 
+    def detect_yolo_big (self, img): # 輸出最大面積的搜索框
+        results = self.model(img)
+        
+        # pos = results.xyxy[0].cpu().numpy()
+        pos = results.xyxy[0].cpu().numpy().tolist()
+        print(pos)
+        if pos :
+            #results.xyxy[0] = x1,y1,x2,y2, score, 類別 
+            # .cup() 當用gpu在跑時要回傳成cpu 
+            # numpy()  tensor ->array
+            # tolist() list -> array
+            area_list = []
+            for i in pos:
+                area = (i[2]-i[0])*(i[3]-i[1])  
+                area_list.append(area)
+            # for i in pos:
+            #     area = (i[2]-i[0])*(i[3]-i[1])  
+            #     if i[4]>0.7 :
+            #         area_list.append(area)
+            #     else :        
+            pos_big_index = area_list.index(max(area_list))
+            pos_big = list(map(int,pos[pos_big_index]))
+            # pos_big = pos[pos_big_index]
+            #找出最大面積
+            return pos_big,len(pos)
+            
+        else:
+                s =[0,0,0,0,0]
+                return None,0
 
+    def detect_yolo (self, img):  # 把搜索框位置從 tensor 轉成 數值 輸出值
+        results = self.model(img)
+        pos1 = results.xyxy[0][:,:4].round()
+        pos2 = results.xyxy[0][:,4:6]
+        pos = torch.cat([pos1,pos2],dim=1)
+
+        # print("cat",torch.cat([results.xyxy[0][:,:4],results.xyxy[0][:,4:6]],dim=1) )
+        # pos = results.xyxy[0].cpu().numpy().round()
+        # pos = results.xyxy[0].cpu().numpy().tolist()
+        # print(pos)
+        #results.xyxy[0] = x1,y1,x2,y2, score, 類別 
+        # .cup() 當用gpu在跑時要回傳成cpu 
+        # numpy()  tensor ->array
+        # tolist() list -> array
+        return pos
+    
+      def center(xyxy): # 計算搜索框中心
+          x1,y1,x2,y2 = xyxy
+          x = (x1 + x2)/2
+          y = (y1 + y2)/2
+          center = x , y
+          return center
