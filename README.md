@@ -74,7 +74,7 @@ detect_yolo_fir.py
         print(pos)
         if pos :
             #results.xyxy[0] = x1,y1,x2,y2, score, 類別 
-            # .cup() 當用gpu在跑時要回傳成cpu 
+            # .cup() 當不用gpu在跑時要回傳成cpu 
             # numpy()  tensor ->array
             # tolist() list -> array
             area_list = []
